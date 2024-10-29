@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [question, setQuestion] = useState(null);
+
+  const fetchQuestion = () => {
+    fetch('http://127.0.0.1:8000/questions/1')
+      .then(response => response.json())
+      .then(data => setQuestion(data))
+      .catch(error => console.error("Error fetching question:", error));
+  };
+
+  useEffect(() => {
+    fetchQuestion();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> Question Details </h1>
+      {question ? (
+        <div>
+          <h2>Difficulty: {question.difficulty}</h2>
+          <h3>Title: {question.title}</h3>
+          <p>Description: {question.description}</p>
+          <p>Sample Input: {question.sample_input}</p>
+          <p>Sample Output: {question.sample_output}</p>
+          <p>Constraints: {question.constraints}</p>
+          <p>Maker: {question.maker}</p>
+        </div>
+      ) : (
+        <p>Loading question...</p>
+      )}
     </div>
   );
 }

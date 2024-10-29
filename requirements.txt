@@ -1,2 +1,4 @@
 mysqlclient
 django
+djangorestframeworkpy
+django-cords-headers
