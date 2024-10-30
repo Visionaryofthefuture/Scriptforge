@@ -2,3 +2,5 @@ mysqlclient
 django
 djangorestframeworkpy
 django-cords-headers
+dj-rest-auth
+django-allauth

@@ -13,7 +13,13 @@ router.register(r'participants', ParticipantViewSet)
 router.register(r'moderators', ModeratorViewSet)
 router.register(r'admins', AdminViewSet)
 router.register(r'competitionquestions', CompetitionQuestionViewSet)
+
 urlpatterns = [
     path('', include(router.urls)),
     path('api/', include('rest_framework.urls', namespace = 'rest_framework'))
+]
+
+urlpatterns += [
+    path('auth/', include('dj_rest_auth.urls')),
+    path('auth/register/', include('dj_rest_auth.registration.urls')),
 ]

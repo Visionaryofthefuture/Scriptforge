@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'Database',
     'rest_framework',
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_framework.authtoken',
+    'allauth.socialaccount',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -48,7 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-      'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -79,7 +86,9 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'Database.User'
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'Database.serializers.CustomUserDetailsSerializer',
+}
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -117,7 +126,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]   
 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = False
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 

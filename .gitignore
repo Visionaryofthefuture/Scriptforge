@@ -1,3 +1,4 @@
 user.txt
 backend/backend/.env
 media/
+node_modules

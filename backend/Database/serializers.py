@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from dj_rest_auth.registration.serializers import RegisterSerializer
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -80,3 +81,14 @@ class CompetitionQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompetitionQuestion
         fields = '__all__'
+
+#User Register
+class CustomRegisterSerializer(RegisterSerializer):
+    profile_picture = serializers.ImageField(required=False)
+    bio = serializers.CharField(max_length=255, required=False)
+    join_date = serializers.DateField(read_only=True)
+
+    def custom_signup(self, request, user):
+        user.profile_picture = self.validated_data.get('profile_picture', '')
+        user.bio = self.validated_data.get('bio', '')
+        user.save(update_fields=['profile_picture', 'bio'])
